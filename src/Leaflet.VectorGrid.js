@@ -41,6 +41,18 @@ L.VectorGrid = L.GridLayer.extend({
 							styleOptions = [styleOptions];
 						}
 
+            feat.layerName = layerName;
+            feat.coords = coords;
+
+            var onClick = this.options.onClick;
+            if (typeof onClick === 'function') {
+              feat.onClick = onClick;
+            } else if (typeof onClick === 'object') {
+              if (typeof onClick[layerName] === 'function') {
+                feat.onClick = onClick[layerName];
+              }
+            }
+
 						/// Style can be an array of styles, for styling a feature
 						/// more than once...
 						for (var j in styleOptions) {
@@ -82,8 +94,6 @@ L.VectorGrid = L.GridLayer.extend({
 		return renderer.getContainer();
 	},
 
-
-
 	// Fills up feat._parts based on the geometry and pxPerExtent,
 	// pretty much as L.Polyline._projectLatLngs and L.Polyline._clipPoints
 	// would do but simplified as the vectors are already simplified/clipped.
@@ -117,6 +127,3 @@ L.VectorGrid = L.GridLayer.extend({
 L.vectorGrid = function (options) {
 	return new L.VectorGrid(options);
 };
-
-
-

@@ -35,6 +35,23 @@ L.SVG.Tile = L.SVG.extend({
 
 	/// TODO: Modify _initPath to include an extra parameter, a group name
 	/// to order symbolizers by z-index
+  _initPath: function(layer) {
+    L.SVG.prototype._initPath.call(this, layer);
+
+    var path = layer._path;
+
+    if (typeof layer.onClick === 'function') {
+      if (layer.type === 2) {
+        path.setAttribute('pointer-events', 'stroke');
+      } else if (layer.type === 3) {
+        path.setAttribute('pointer-events', 'fill');
+      }
+
+      path.addEventListener('click', function(e) {
+        layer.onClick({ type: 'click', target: layer });
+      });
+    }
+  },
 
 	_addPath: function (layer) {
 		this._rootGroup.appendChild(layer._path);
@@ -46,4 +63,3 @@ L.SVG.Tile = L.SVG.extend({
 L.svg.tile = function(tileSize, opts){
 	return new L.SVG.Tile(tileSize, opts);
 }
-
