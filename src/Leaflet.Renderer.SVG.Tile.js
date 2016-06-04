@@ -45,7 +45,9 @@ L.SVG.Tile = L.SVG.extend({
 				path.setAttribute('pointer-events', 'stroke');
 			} else if (layer.type === 3) {
 				path.setAttribute('pointer-events', 'fill');
-			}
+			} else if (layer.type === 1) {
+        path.setAttribute('pointer-events', 'painted');
+      }
 
 			path.addEventListener('click', function(e) {
 				layer.onClick({ type: 'click', target: layer });
