@@ -41,17 +41,17 @@ L.VectorGrid = L.GridLayer.extend({
 							styleOptions = [styleOptions];
 						}
 
-            feat.layerName = layerName;
-            feat.coords = coords;
+						feat.layerName = layerName;
+						feat.coords = coords;
 
-            var onClick = this.options.onClick;
-            if (typeof onClick === 'function') {
-              feat.onClick = onClick;
-            } else if (typeof onClick === 'object') {
-              if (typeof onClick[layerName] === 'function') {
-                feat.onClick = onClick[layerName];
-              }
-            }
+						var onClick = this.options.onClick;
+						if (typeof onClick === 'function') {
+							feat.onClick = onClick;
+						} else if (typeof onClick === 'object') {
+							if (typeof onClick[layerName] === 'function') {
+								feat.onClick = onClick[layerName];
+							}
+						}
 
 						/// Style can be an array of styles, for styling a feature
 						/// more than once...

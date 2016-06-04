@@ -6,15 +6,15 @@
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="../vendor/leaflet.css" />
+	<link rel="stylesheet" href="../vendor/leaflet.css" />
 
-  <script src="../vendor/leaflet-src.js"></script>
-  <script src="../vendor/pbf-dev.js"></script>
-  <script src="../vendor/vector-tile-dev.js"></script>
+	<script src="../vendor/leaflet-src.js"></script>
+	<script src="../vendor/pbf-dev.js"></script>
+	<script src="../vendor/vector-tile-dev.js"></script>
 
-  <script src="../src/Leaflet.VectorGrid.js"></script>
+	<script src="../src/Leaflet.VectorGrid.js"></script>
 	<script src="../src/Leaflet.VectorGrid.Protobuf.js"></script>
-  <script src="../src/Leaflet.Renderer.SVG.Tile.js"></script>
+	<script src="../src/Leaflet.Renderer.SVG.Tile.js"></script>
 </head>
 <body style='margin:0'>
 	<div id="map" style="width: 100vw; height: 100vh"></div>
@@ -25,12 +25,12 @@
 		var url = 'https://{s}.tiles.mapbox.com/v4/mapbox.mapbox-streets-v6/{z}/{x}/{y}.vector.pbf?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw';
 
 		var vectorTileOptions = {
-      rendererFactory: L.svg.tile,
-      onClick: {
-        admin: function(e) {
-          alert(e.target.properties.iso_3166_1);
-        }
-      },
+			rendererFactory: L.svg.tile,
+			onClick: {
+				admin: function(e) {
+					alert(e.target.properties.iso_3166_1);
+				}
+			},
 			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://www.mapbox.com/about/maps/">MapBox</a>',
 			vectorTileLayerStyles: {
 
