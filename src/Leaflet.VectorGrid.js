@@ -1,5 +1,3 @@
-
-
 L.VectorGrid = L.GridLayer.extend({
 
 	options: {
@@ -41,17 +39,11 @@ L.VectorGrid = L.GridLayer.extend({
 							styleOptions = [styleOptions];
 						}
 
-						feat.layerName = layerName;
-						feat.coords = coords;
+						feat.getLayerName = function() { return layerName; };
+						feat.getCoords = function() { return coords; };
 
-						var onClick = this.options.onClick;
-						if (typeof onClick === 'function') {
-							feat.onClick = onClick;
-						} else if (typeof onClick === 'object') {
-							if (typeof onClick[layerName] === 'function') {
-								feat.onClick = onClick[layerName];
-							}
-						}
+            addEventHandler(feat, layerName, 'onClick', this.options.onClick);
+            // addEventHandler(feat, layerName, 'onMouseOver')
 
 						/// Style can be an array of styles, for styling a feature
 						/// more than once...
@@ -122,8 +114,16 @@ L.VectorGrid = L.GridLayer.extend({
 
 });
 
-
-
 L.vectorGrid = function (options) {
 	return new L.VectorGrid(options);
 };
+
+function addEventHandler(feature, layerName, name, handler) {
+  if (typeof handler === 'function') {
+    feature[name] = handler;
+  } else if (typeof handler === 'object') {
+    if (typeof handler[layerName] === 'function') {
+      feature[name] = handler[layerName];
+    }
+  }
+}
