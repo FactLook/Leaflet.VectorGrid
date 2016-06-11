@@ -40,7 +40,17 @@ L.SVG.Tile = L.SVG.extend({
 
 		var path = layer._path;
 
-		if (typeof layer.onClick === 'function') {
+    function addEventListener(name, handler) {
+      path.addEventListener(name, function(e) {
+        handler({
+          type: name,
+          target: layer,
+          latlng: layer._map.mouseEventToLatLng(e)
+        });
+      });
+    }
+
+		if (typeof layer._onClick === 'function') {
 			if (layer.type === 2) {
 				path.setAttribute('pointer-events', 'stroke');
 			} else if (layer.type === 3) {
@@ -49,10 +59,28 @@ L.SVG.Tile = L.SVG.extend({
         path.setAttribute('pointer-events', 'painted');
       }
 
-			path.addEventListener('click', function(e) {
-				layer.onClick({ type: 'click', target: layer });
-			});
+      addEventListener('click', layer._onClick);
 		}
+
+    if (typeof layer._onMouseUp == 'function') {
+      addEventListener('mouseup', layer._onMouseUp);
+    }
+
+    if (typeof layer._onMouseDown == 'function') {
+      addEventListener('mousedown', layer._onMouseDown);
+    }
+
+    if (typeof layer._onMouseMove == 'function') {
+      addEventListener('mousemove', layer._onMouseMove);
+    }
+
+    if (typeof layer._onMouseOver == 'function') {
+      addEventListener('mouseover', layer._onMouseOver);
+    }
+
+    if (typeof layer._onMouseOut == 'function') {
+      addEventListener('mouseout', layer._onMouseOut);
+    }
 	},
 
 	_addPath: function (layer) {
@@ -60,7 +88,6 @@ L.SVG.Tile = L.SVG.extend({
 	},
 
 });
-
 
 L.svg.tile = function(tileSize, opts){
 	return new L.SVG.Tile(tileSize, opts);
