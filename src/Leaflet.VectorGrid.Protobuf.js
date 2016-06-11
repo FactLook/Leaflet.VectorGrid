@@ -74,8 +74,6 @@ L.VectorGrid.Protobuf = L.VectorGrid.extend({
 	}
 });
 
-
 L.vectorGrid.protobuf = function (url, options) {
 	return new L.VectorGrid.Protobuf(url, options);
 };
-

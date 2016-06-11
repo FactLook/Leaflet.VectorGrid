@@ -1,5 +1,3 @@
-
-
 L.VectorGrid = L.GridLayer.extend({
 
 	options: {
@@ -12,7 +10,6 @@ L.VectorGrid = L.GridLayer.extend({
 
 		var vectorTilePromise = this._getVectorTilePromise(coords);
 
-
 		vectorTilePromise.then( function renderTile(vectorTile) {
 
 			for (var layerName in vectorTile.layers) {
@@ -23,6 +20,13 @@ L.VectorGrid = L.GridLayer.extend({
 
 				var layerStyle = this.options.vectorTileLayerStyles[ layerName ] ||
 				L.Path.prototype.options;
+
+        var onClick = getEventHandler(layerName, this.options.onClick);
+        var onMouseDown = getEventHandler(layerName, this.options.onMouseDown);
+        var onMouseUp = getEventHandler(layerName, this.options.onMouseUp);
+        var onMouseOver = getEventHandler(layerName, this.options.onMouseOver);
+        var onMouseMove = getEventHandler(layerName, this.options.onMouseMove);
+        var onMouseOut = getEventHandler(layerName, this.options.onMouseOut);
 
 				for (var i in layer.features) {
 					var feat = layer.features[i];
@@ -40,6 +44,17 @@ L.VectorGrid = L.GridLayer.extend({
 						if (!(styleOptions instanceof Array)) {
 							styleOptions = [styleOptions];
 						}
+
+            feat._map = this._map;
+						feat.getLayerName = function() { return layerName; };
+						feat.getCoords = function() { return coords; };
+
+            feat._onClick = onClick;
+            feat._onMouseMove = onMouseMove;
+            feat._onMouseDown = onMouseDown;
+            feat._onMouseUp = onMouseUp;
+            feat._onMouseOver = onMouseOver;
+            feat._onMouseOut = onMouseOut;
 
 						/// Style can be an array of styles, for styling a feature
 						/// more than once...
@@ -82,8 +97,6 @@ L.VectorGrid = L.GridLayer.extend({
 		return renderer.getContainer();
 	},
 
-
-
 	// Fills up feat._parts based on the geometry and pxPerExtent,
 	// pretty much as L.Polyline._projectLatLngs and L.Polyline._clipPoints
 	// would do but simplified as the vectors are already simplified/clipped.
@@ -112,11 +125,16 @@ L.VectorGrid = L.GridLayer.extend({
 
 });
 
-
-
 L.vectorGrid = function (options) {
 	return new L.VectorGrid(options);
 };
 
-
-
+function getEventHandler(layerName, handler) {
+  if (typeof handler === 'function') {
+    return handler;
+  } else if (typeof handler === 'object') {
+    if (typeof handler[layerName] === 'function') {
+      return handler[layerName];
+    }
+  }
+}
