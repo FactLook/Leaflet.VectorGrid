@@ -2,6 +2,7 @@ node_modules
 vendor
 npm-debug.log
 .gobble-build
-dist
+dist/*
+!dist/Leaflet.VectorGrid.js
 .gobble
 .gobble-build
