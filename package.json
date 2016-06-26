@@ -4,10 +4,11 @@
   "description": "Display gridded vector data (sliced GeoJSON or protobuf vector tiles) in Leaflet 1.0.0",
   "main": "dist/Leaflet.VectorGrid.bundled.min.js",
   "dependencies": {
+    "geojson-vt": "^2.1.8",
     "pbf": "^1.3.5",
+    "sphericalmercator": "^1.0.5",
     "topojson": "^1.6.24",
-    "vector-tile": "^1.2.0",
-    "geojson-vt": "^2.1.8"
+    "vector-tile": "^1.2.0"
   },
   "devDependencies": {
     "gobble": "^0.10.2",
