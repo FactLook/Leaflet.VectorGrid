@@ -41,6 +41,14 @@ L.SVG.Tile = L.SVG.extend({
 		var path = layer._path;
 
     function addEventListener(name, handler) {
+      if (layer.type === 2) {
+        path.setAttribute('pointer-events', 'stroke');
+      } else if (layer.type === 3) {
+        path.setAttribute('pointer-events', 'fill');
+      } else if (layer.type === 1) {
+        path.setAttribute('pointer-events', 'painted');
+      }
+
       path.addEventListener(name, function(e) {
         handler({
           type: name,
@@ -51,14 +59,6 @@ L.SVG.Tile = L.SVG.extend({
     }
 
 		if (typeof layer._onClick === 'function') {
-			if (layer.type === 2) {
-				path.setAttribute('pointer-events', 'stroke');
-			} else if (layer.type === 3) {
-				path.setAttribute('pointer-events', 'fill');
-			} else if (layer.type === 1) {
-        path.setAttribute('pointer-events', 'painted');
-      }
-
       addEventListener('click', layer._onClick);
 		}
 
