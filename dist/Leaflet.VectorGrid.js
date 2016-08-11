@@ -405,7 +405,11 @@ L.VectorGrid.Protobuf = L.VectorGrid.extend({
 
     var promise;
 
-    if (this.options.bbox) {
+    if (this.options.minZoom && this.options.minZoom > coords.z) {
+      promise = Promise.resolve({ layers:[] });
+    } else if (this.options.maxZoom && this.options.maxZoom < coords.z) {
+      promise = Promise.resolve({ layers:[] });
+    } else if (this.options.bbox) {
       var bboxCoords = this._merc.bbox(coords.x, coords.y, coords.z);
       var tileBbox = L.latLngBounds(L.latLng(bboxCoords[1], bboxCoords[0]), L.latLng(bboxCoords[3], bboxCoords[2]));
 
