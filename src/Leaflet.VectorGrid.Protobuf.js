@@ -24,9 +24,9 @@ L.VectorGrid.Protobuf = L.VectorGrid.extend({
 
     var promise;
 
-    if (this.options.minZoom && this.options.minZoom > coords.z) {
+    if (this.options.minTileZoom && this.options.minTileZoom > coords.z) {
       promise = Promise.resolve({ layers:[] });
-    } else if (this.options.maxZoom && this.options.maxZoom < coords.z) {
+    } else if (this.options.maxTileZoom && this.options.maxTileZoom < coords.z) {
       promise = Promise.resolve({ layers:[] });
     } else if (this.options.bbox) {
       var bboxCoords = this._merc.bbox(coords.x, coords.y, coords.z);
