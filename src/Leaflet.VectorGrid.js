@@ -20,7 +20,7 @@ L.VectorGrid = L.GridLayer.extend({
 
         var layerStyle;
         if (this.options.vectorTileLayerStyles instanceof Function) {
-          layerSTyle = this.options.vectorTileLayerStyles;
+          layerStyle = this.options.vectorTileLayerStyles;
         } else if (this.options.vectorTileLayerStyles instanceof Object) {
           layerStyle = this.options.vectorTileLayerStyles[layerName]
         } else {
