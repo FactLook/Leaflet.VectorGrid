@@ -19,9 +19,9 @@ L.VectorGrid = L.GridLayer.extend({
 				var pxPerExtent = this.getTileSize().x / layer.extent;
 
         var layerStyle;
-        if (layerStyle instanceof Function) {
+        if (this.options.vectorTileLayerStyles instanceof Function) {
           layerSTyle = this.options.vectorTileLayerStyles;
-        } else if (layerStyle instanceof Object) {
+        } else if (this.options.vectorTileLayerStyles instanceof Object) {
           layerStyle = this.options.vectorTileLayerStyles[layerName]
         } else {
           layerStyle = L.Path.prototype.options;
