@@ -18,8 +18,14 @@ L.VectorGrid = L.GridLayer.extend({
 				/// NOTE: THIS ASSUMES SQUARE TILES!!!!!1!
 				var pxPerExtent = this.getTileSize().x / layer.extent;
 
-				var layerStyle = this.options.vectorTileLayerStyles[ layerName ] ||
-				L.Path.prototype.options;
+        var layerStyle;
+        if (layerStyle instanceof Function) {
+          layerSTyle = this.options.vectorTileLayerStyles;
+        } else if (layerStyle instanceof Object) {
+          layerStyle = this.options.vectorTileLayerStyles[layerName]
+        } else {
+          layerStyle = L.Path.prototype.options;
+        }
 
         var onClick = getEventHandler(layerName, this.options.onClick);
         var onMouseDown = getEventHandler(layerName, this.options.onMouseDown);
