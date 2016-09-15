@@ -15,23 +15,48 @@ L.VectorGrid.Slicer = L.VectorGrid.extend({
 		L.VectorGrid.prototype.initialize.call(this, options);
 
 
-		this._slicers = {};
-		if (geojson.type && geojson.type === 'Topology') {
+			this._slicers = {};
+        this.addJsonLayer(geojson);
+		/*if (geojson.type && geojson.type === 'Topology') {
 			// geojson is really a topojson
 			for (var layerName in geojson.objects) {
 				this._slicers[layerName] = geojsonvt(
 					topojson.feature(geojson, geojson.objects[layerName])
 				, this.options);
-// 				console.log('topojson layer:', layerName);
+                console.log('topojson layer:', layerName);
 			}
 		} else {
 			// For a geojson, create just one vectortilelayer named with the value
 			// of the option.
 			// Inherits available options from geojson-vt!
+                console.log('Geojson layer:');
 			this._slicers[this.options.vectorTileLayerName] = geojsonvt(geojson, this.options);
-		}
-
+		}*/
 	},
+
+  addJsonLayer : function(geojson){
+        if (geojson.type && geojson.type === 'Topology') {
+            // geojson is really a topojson
+            for (var layerName in geojson.objects) {
+                var existingLayer = this._slicers[layerName];
+                if(!existingLayer){
+                    this._slicers[layerName] = geojsonvt(
+                        topojson.feature(geojson, geojson.objects[layerName])
+                        , this.options);
+                    //console.log('topojson layer:', layerName);
+                }
+            }
+        } else {
+            // For a geojson, create just one vectortilelayer named with the value
+            // of the option.
+            // Inherits available options from geojson-vt!
+            //console.log('Geojson layer:');
+            var existingLayer = this._slicers[layerName];
+            if(!existingLayer){
+                this._slicers[this.options.vectorTileLayerName] = geojsonvt(geojson, this.options);
+            }
+        }
+    },
 
 	_getVectorTilePromise: function(coords) {
 
