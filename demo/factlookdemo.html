@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet.GridLayer.Vector.Slicer demo</title>
+	<meta charset="utf-8" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="leaflet.css" />
+	<script src="leaflet-src.js"></script>
+	<script src="Leaflet.VectorGrid.bundled.js"></script>
+
+	<!-- <script type="text/javascript" src="48201Feature.js"></script> -->
+	<script type="text/javascript" src="TexasZipcodes.js"></script>
+	<script type="text/javascript" src="zipcode436.js"></script>
+	<script type="text/javascript" src="zipcode442.js"></script>
+	<script type="text/javascript" src="zipcode406.js"></script>
+	<script type="text/javascript" src="4_56.js"></script>
+<script type="text/javascript" src="4_54.js"></script>
+<script type="text/javascript" src="4_55.js"></script>
+<script type="text/javascript" src="4_53.js"></script>
+<script type="text/javascript" src="4_51.js"></script>
+<script type="text/javascript" src="4_50.js"></script>
+<script type="text/javascript" src="4_72.js"></script>
+<script type="text/javascript" src="4_01.js"></script>
+<script type="text/javascript" src="4_02.js"></script>
+<script type="text/javascript" src="4_04.js"></script>
+<script type="text/javascript" src="4_05.js"></script>
+<script type="text/javascript" src="4_08.js"></script>
+<script type="text/javascript" src="4_09.js"></script>
+<script type="text/javascript" src="4_10.js"></script>
+<script type="text/javascript" src="4_11.js"></script>
+<script type="text/javascript" src="4_12.js"></script>
+<script type="text/javascript" src="4_13.js"></script>
+<script type="text/javascript" src="4_15.js"></script>
+<script type="text/javascript" src="4_16.js"></script>
+<script type="text/javascript" src="4_29.js"></script>
+<script type="text/javascript" src="4_28.js"></script>
+<script type="text/javascript" src="4_27.js"></script>
+<script type="text/javascript" src="4_26.js"></script>
+<script type="text/javascript" src="4_25.js"></script>
+<script type="text/javascript" src="4_23.js"></script>
+<script type="text/javascript" src="4_24.js"></script>
+<script type="text/javascript" src="4_22.js"></script>
+<script type="text/javascript" src="4_21.js"></script>
+<script type="text/javascript" src="4_20.js"></script>
+<script type="text/javascript" src="4_19.js"></script>
+<script type="text/javascript" src="4_18.js"></script>
+<script type="text/javascript" src="4_17.js"></script>
+	
+</head>
+<body style='margin:0'>
+	<div id="map" style="width: 100vw; height: 100vh"></div>
+
+	<script>
+
+		var map = L.map('map');
+// 		var canvasRenderer = L.canvas();
+
+		var cartodbAttribution = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
+
+		var positron = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+			attribution: cartodbAttribution,
+			opacity: 1
+		}).addTo(map);
+
+
+	
+function highlightFeature(e) {
+			var layer = e.target;
+				console.log('highlightFeature event');
+
+			layer.setStyle({
+				weight: 5,
+				color: '#666',
+				dashArray: '',
+				fillOpacity: 0.7
+			});
+
+			if (!L.Browser.ie) {
+				layer.bringToFront();
+			}
+
+		
+		};
+
+	function resetHighlight(e) {
+		console.log('resetHighlight event');
+			//geojson.resetStyle(e.target);
+			
+		};
+
+function handleClick(e){
+	console.log('click event');
+};
+
+		
+var vectorGrid = L.vectorGrid.slicer( texaszipcodes, {
+				rendererFactory: L.canvas.tile,
+				vectorTileLayerStyles:  function(properties, zoom) {
+					//console.log(properties);
+						var p = properties.mapcolor7 % 5;
+						return {
+							fillColor: p === 0 ? '#800026' :
+									p === 1 ? '#E31A1C' :
+									p === 2 ? '#FEB24C' :
+									p === 3 ? '#B2FE4C' : '#FFEDA0',
+							fillOpacity: 0.5,
+							stroke: true,
+							fill: true,
+							color: 'black',
+								opacity: 0.2,
+							weight: 1,
+						}
+					},
+					onMouseOver : highlightFeature,
+					onMouseOut : resetHighlight,
+					onClick : handleClick
+
+				
+
+			});
+vectorGrid.addJsonLayer(zipcode436);
+
+vectorGrid.addJsonLayer(zipcode442);
+vectorGrid.addJsonLayer(zipcode406);
+vectorGrid.addJsonLayer(z456);
+vectorGrid.addJsonLayer(z454);
+vectorGrid.addJsonLayer(z455);
+vectorGrid.addJsonLayer(z453);
+vectorGrid.addJsonLayer(z451);
+vectorGrid.addJsonLayer(z450);
+vectorGrid.addJsonLayer(z472);
+vectorGrid.addJsonLayer(z401);
+vectorGrid.addJsonLayer(z402);
+vectorGrid.addJsonLayer(z404);
+vectorGrid.addJsonLayer(z405);
+vectorGrid.addJsonLayer(z408);
+vectorGrid.addJsonLayer(z409);
+vectorGrid.addJsonLayer(z410);
+vectorGrid.addJsonLayer(z411);
+vectorGrid.addJsonLayer(z412);
+vectorGrid.addJsonLayer(z413);
+vectorGrid.addJsonLayer(z415);
+vectorGrid.addJsonLayer(z416);
+vectorGrid.addJsonLayer(z429);
+vectorGrid.addJsonLayer(z428);
+vectorGrid.addJsonLayer(z427);
+vectorGrid.addJsonLayer(z426);
+vectorGrid.addJsonLayer(z425);
+vectorGrid.addJsonLayer(z423);
+vectorGrid.addJsonLayer(z424);
+vectorGrid.addJsonLayer(z422);
+vectorGrid.addJsonLayer(z421);
+vectorGrid.addJsonLayer(z420);
+vectorGrid.addJsonLayer(z419);
+vectorGrid.addJsonLayer(z418);
+vectorGrid.addJsonLayer(z417);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+vectorGrid.addTo(map);
+
+ var center = new L.LatLng(36.73888412439431, -95.5810546875);
+			map.setView( center, 5, {animate: false} );
+
+	
+
+
+	</script>
+</body>
+</html>
