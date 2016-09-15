@@ -5,10 +5,17 @@
 	<meta charset="utf-8" />
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="./leaflet.css" />
-	<script src="./leaflet-src.js"></script>
-	<script src="../Leaflet.VectorGrid.bundled.js"></script>
+  <link rel="stylesheet" href="../vendor/leaflet.css" />
 
+	<script src="../vendor/leaflet-src.js"></script>
+	<script src="../vendor/pbf-dev.js"></script>
+	<script src="../vendor/vector-tile-dev.js"></script>
+  <script src="../vendor/geojson-vt-dev.js"></script>
+
+	<script src="../src/Leaflet.VectorGrid.js"></script>
+	<script src="../src/Leaflet.VectorGrid.Protobuf.js"></script>
+	<script src="../src/Leaflet.Renderer.Canvas.Tile.js"></script>
+  <script src="../src/Leaflet.VectorGrid.Slicer.js"></script>
 	<script type="text/javascript" src="./eu-countries.js"></script>
 
 
@@ -28,10 +35,9 @@
 			opacity: 1
 		}).addTo(map);
 
-
-
 		var vectorGrid = L.vectorGrid.slicer( euCountries, {
 			rendererFactory: L.canvas.tile,
+      bbox: L.latLngBounds(L.latLng(34.0162418, -21.796875), L.latLng(179.8984375, 80.5320711)),
 			vectorTileLayerStyles: {
 				sliced: function(properties, zoom) {
 					var p = properties.mapcolor7 % 5;

@@ -30,14 +30,29 @@ L.Canvas.Tile = L.Canvas.extend({
 		this._ctx = container.getContext('2d');
 	},
 
-
 	/// TODO: Modify _initPath to include an extra parameter, a group name
 	/// to order symbolizers by z-index
+	_initPath: function(layer) {
+		L.Canvas.prototype._initPath.call(this, layer);
 
+		var path = layer._path;
+
+		if (typeof layer.onClick === 'function') {
+			if (layer.type === 2) {
+				path.setAttribute('pointer-events', 'stroke');
+			} else if (layer.type === 3) {
+				path.setAttribute('pointer-events', 'fill');
+			} else if (layer.type === 1) {
+        path.setAttribute('pointer-events', 'painted');
+      }
+
+			path.addEventListener('click', function(e) {
+				layer.onClick({ type: 'click', target: layer });
+			});
+		}
+	},
 });
-
 
 L.canvas.tile = function(tileSize, opts){
 	return new L.Canvas.Tile(tileSize, opts);
 }
-

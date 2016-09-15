@@ -35,6 +35,53 @@ L.SVG.Tile = L.SVG.extend({
 
 	/// TODO: Modify _initPath to include an extra parameter, a group name
 	/// to order symbolizers by z-index
+	_initPath: function(layer) {
+		L.SVG.prototype._initPath.call(this, layer);
+
+		var path = layer._path;
+
+    function addEventListener(name, handler) {
+      if (layer.type === 2) {
+        path.setAttribute('pointer-events', 'stroke');
+      } else if (layer.type === 3) {
+        path.setAttribute('pointer-events', 'fill');
+      } else if (layer.type === 1) {
+        path.setAttribute('pointer-events', 'painted');
+      }
+
+      path.addEventListener(name, function(e) {
+        handler({
+          type: name,
+          target: layer,
+          latlng: layer._map.mouseEventToLatLng(e)
+        });
+      });
+    }
+
+		if (typeof layer._onClick === 'function') {
+      addEventListener('click', layer._onClick);
+		}
+
+    if (typeof layer._onMouseUp == 'function') {
+      addEventListener('mouseup', layer._onMouseUp);
+    }
+
+    if (typeof layer._onMouseDown == 'function') {
+      addEventListener('mousedown', layer._onMouseDown);
+    }
+
+    if (typeof layer._onMouseMove == 'function') {
+      addEventListener('mousemove', layer._onMouseMove);
+    }
+
+    if (typeof layer._onMouseOver == 'function') {
+      addEventListener('mouseover', layer._onMouseOver);
+    }
+
+    if (typeof layer._onMouseOut == 'function') {
+      addEventListener('mouseout', layer._onMouseOut);
+    }
+	},
 
 	_addPath: function (layer) {
 		this._rootGroup.appendChild(layer._path);
@@ -42,8 +89,6 @@ L.SVG.Tile = L.SVG.extend({
 
 });
 
-
 L.svg.tile = function(tileSize, opts){
 	return new L.SVG.Tile(tileSize, opts);
 }
-
